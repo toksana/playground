@@ -1,9 +1,12 @@
 'use client';
 
 import { useGLTF } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
 import type { ComponentProps } from 'react';
 import { BackSide } from 'three';
-import type { Material, Mesh } from 'three';
+import type { Material, Mesh, MeshStandardMaterial } from 'three';
+import type { GlowRef } from '@/lib/carve/glow';
 import {
   INNER_SHELL_COLOR,
   INNER_SHELL_SCALE,
@@ -21,13 +24,19 @@ interface PumpkinGLTF {
 }
 
 interface PumpkinProps extends ComponentProps<'group'> {
-  glow?: number;
+  glow: GlowRef;
 }
 
-export const Pumpkin = ({ glow = 0, ...props }: PumpkinProps) => {
+export const Pumpkin = ({ glow, ...props }: PumpkinProps) => {
   const { nodes, materials } = useGLTF(PUMPKIN_URL) as unknown as PumpkinGLTF;
   const mask = useCarveMask();
   const drawing = useCarveDrawing();
+  const inner = useRef<MeshStandardMaterial>(null);
+
+  useFrame(() => {
+    if (inner.current !== null)
+      inner.current.emissiveIntensity = glow.current * 2;
+  });
 
   return (
     <group {...props} dispose={null}>
@@ -36,10 +45,10 @@ export const Pumpkin = ({ glow = 0, ...props }: PumpkinProps) => {
       </mesh>
       <mesh geometry={nodes.PumpkinShell.geometry} scale={INNER_SHELL_SCALE}>
         <meshStandardMaterial
+          ref={inner}
           side={BackSide}
           color={INNER_SHELL_COLOR}
           emissive={GLOW_COLOR}
-          emissiveIntensity={glow * 2}
         />
       </mesh>
       <mesh geometry={nodes.Stem.geometry} material={materials.Stem} />

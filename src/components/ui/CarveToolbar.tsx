@@ -10,6 +10,7 @@ export const CarveToolbar = () => {
   const hasStrokes = useCarveStore((s) => s.strokes.length > 0);
   const undo = useCarveStore((s) => s.undo);
   const clear = useCarveStore((s) => s.clear);
+  const setPhase = useCarveStore((s) => s.setPhase);
 
   if (!visible) return null;
 
@@ -21,6 +22,9 @@ export const CarveToolbar = () => {
       </ToolButton>
       <ToolButton disabled={!hasStrokes} onClick={clear}>
         Clear
+      </ToolButton>
+      <ToolButton disabled={!hasStrokes} onClick={() => setPhase('lighting')}>
+        Light it
       </ToolButton>
     </div>
   );

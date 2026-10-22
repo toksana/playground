@@ -7,15 +7,16 @@ import type CSM from 'three-custom-shader-material/vanilla';
 import { Color, MeshStandardMaterial } from 'three';
 import type { CanvasTexture } from 'three';
 import { CARVE_EXTENT, FRONT_THRESHOLD } from '@/lib/carve/projection';
+import type { GlowRef } from '@/lib/carve/glow';
 import { GLOW_COLOR } from '@/lib/carve/look';
 import { carveFragmentShader, carveVertexShader } from './carveShader';
 
 interface CarveMaterialProps {
   mask: CanvasTexture;
-  glow?: number;
+  glow: GlowRef;
 }
 
-export const CarveMaterial = ({ mask, glow = 0 }: CarveMaterialProps) => {
+export const CarveMaterial = ({ mask, glow }: CarveMaterialProps) => {
   const material = useRef<CSM<typeof MeshStandardMaterial>>(null);
 
   const uniforms = useMemo(
@@ -23,7 +24,7 @@ export const CarveMaterial = ({ mask, glow = 0 }: CarveMaterialProps) => {
       uMask: { value: mask },
       uExtent: { value: CARVE_EXTENT },
       uFront: { value: FRONT_THRESHOLD },
-      uGlow: { value: glow },
+      uGlow: { value: glow.current },
       uGlowColor: { value: new Color(GLOW_COLOR) },
     }),
     // Uniform values are updated in place below; only a new mask texture rebuilds them.
@@ -33,7 +34,7 @@ export const CarveMaterial = ({ mask, glow = 0 }: CarveMaterialProps) => {
 
   useFrame(() => {
     if (material.current === null) return;
-    material.current.uniforms.uGlow.value = glow;
+    material.current.uniforms.uGlow.value = glow.current;
   });
 
   return (
