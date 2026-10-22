@@ -11,6 +11,7 @@ import {
 } from '@/lib/carve/look';
 import { useCarveMask } from '@/lib/carve/useCarveMask';
 import { CarveMaterial } from './CarveMaterial';
+import { useCarveDrawing } from './useCarveDrawing';
 
 const PUMPKIN_URL = '/models/pumpkin.glb';
 
@@ -26,10 +27,11 @@ interface PumpkinProps extends ComponentProps<'group'> {
 export const Pumpkin = ({ glow = 0, ...props }: PumpkinProps) => {
   const { nodes, materials } = useGLTF(PUMPKIN_URL) as unknown as PumpkinGLTF;
   const mask = useCarveMask();
+  const drawing = useCarveDrawing();
 
   return (
     <group {...props} dispose={null}>
-      <mesh geometry={nodes.PumpkinShell.geometry}>
+      <mesh geometry={nodes.PumpkinShell.geometry} {...drawing}>
         <CarveMaterial mask={mask.texture} glow={glow} />
       </mesh>
       <mesh geometry={nodes.PumpkinShell.geometry} scale={INNER_SHELL_SCALE}>

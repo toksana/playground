@@ -29,6 +29,7 @@ export const toCanvasPoint = ([u, v]: Point, size: number): Point => [
 ];
 
 const fillBackground = (ctx: CanvasRenderingContext2D, size: number): void => {
+  ctx.globalCompositeOperation = 'source-over';
   ctx.globalAlpha = 1;
   ctx.fillStyle = '#000';
   ctx.fillRect(0, 0, size, size);
@@ -68,6 +69,9 @@ export const drawStroke = (
 ): void => {
   const points = stroke.pts.map((p) => toCanvasPoint(p, size));
   const width = stroke.w * size;
+  // `lighten` keeps the max of overlapping marks, so segments drawn one by one (incremental)
+  // look identical to the same stroke drawn as one path, with no alpha build-up at the joints.
+  ctx.globalCompositeOperation = 'lighten';
   ctx.fillStyle = '#fff';
   ctx.strokeStyle = '#fff';
   ctx.lineCap = 'round';
@@ -81,6 +85,7 @@ export const drawStroke = (
     strokeLine(ctx, points, width, 1);
   }
   ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
 };
 
 // Full redraw: use on undo / clear / load. Incremental drawing calls `drawStroke` directly.
