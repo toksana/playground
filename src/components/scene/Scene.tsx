@@ -6,6 +6,8 @@ import { Candle } from './Candle';
 import { Effects } from './Effects';
 import { FitCamera } from './FitCamera';
 import { Pumpkin } from './Pumpkin';
+import { useGlow } from './useGlow';
+import { useIgnition } from './useIgnition';
 
 const BACKGROUND = '#05060c';
 
@@ -15,6 +17,8 @@ const useStartCarving = (): void =>
 
 export const Scene = () => {
   useStartCarving();
+  useIgnition();
+  const glow = useGlow();
 
   return (
     <>
@@ -23,9 +27,9 @@ export const Scene = () => {
       <FitCamera />
       <ambientLight intensity={0.15} color="#5a6a9a" />
       <directionalLight position={[-3, 4, 3]} intensity={0.9} color="#8fa8ff" />
-      <Pumpkin />
-      <Candle position={[0, -0.6, 0]} />
-      <Effects />
+      <Pumpkin glow={glow} />
+      <Candle glow={glow} position={[0, -0.6, 0]} />
+      <Effects glow={glow} />
     </>
   );
 };
