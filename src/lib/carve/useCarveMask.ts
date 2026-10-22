@@ -1,25 +1,28 @@
 import { useEffect, useMemo } from 'react';
+import { useCarveStore } from '@/store/useCarveStore';
 import { createMask, pickMaskSize } from './maskCanvas';
 import type { Mask } from './maskCanvas';
-import type { Stroke } from './strokes';
+import { applyMaskUpdate, planMaskUpdate } from './maskSync';
 
-// TEMPORARY (PLAN.md 1.5): a circle plus an off-centre bar to check hole, orientation and the back wall.
-// Item 1.6 replaces this with the strokes from `useCarveStore`.
-const TEST_STROKES: Stroke[] = [
-  { w: 0.2, pts: [[0.5, 0.5]] },
-  {
-    w: 0.04,
-    pts: [
-      [0.7, 0.8],
-      [0.9, 0.8],
-    ],
-  },
-];
-
+// Mask canvas kept in sync with the carve store: incremental while drawing, full redraw otherwise.
 export const useCarveMask = (): Mask => {
-  const mask = useMemo(() => createMask(pickMaskSize(), TEST_STROKES), []);
+  const mask = useMemo(
+    () => createMask(pickMaskSize(), useCarveStore.getState().strokes),
+    [],
+  );
 
-  useEffect(() => () => mask.texture.dispose(), [mask]);
+  useEffect(() => {
+    const unsubscribe = useCarveStore.subscribe((state, prev) =>
+      applyMaskUpdate(mask, state, planMaskUpdate(prev, state)),
+    );
+    // Catch up with anything that changed between creating the mask and subscribing.
+    applyMaskUpdate(mask, useCarveStore.getState(), { kind: 'full' });
+
+    return () => {
+      unsubscribe();
+      mask.texture.dispose();
+    };
+  }, [mask]);
 
   return mask;
 };
