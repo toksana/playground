@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Loader } from './Loader';
+import { CarveToolbar } from './ui/CarveToolbar';
 import { Scene } from './scene/Scene';
 
 export const Experience = () => (
@@ -18,5 +19,6 @@ export const Experience = () => (
       </Suspense>
     </Canvas>
     <Loader />
+    <CarveToolbar />
   </div>
 );
