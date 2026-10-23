@@ -41,6 +41,7 @@ describe('carve voice', () => {
     expect(carveVolume(fast)).toBeGreaterThan(carveVolume(slow));
     expect(carveRate(fast)).toBeGreaterThan(carveRate(slow));
     expect(carveVolume(1000)).toBe(carveVolume(2000));
+    expect(carveVolume(1000)).toBe(0.3);
     expect(carveRate(1000)).toBe(1.4);
   });
 });

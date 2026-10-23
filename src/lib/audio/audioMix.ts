@@ -26,7 +26,7 @@ export const phaseMix = (phase: Phase): Record<Layer, number> => {
 };
 
 const MAX_SPEED = 1.5; // mask units per second that count as "fast"
-const MAX_CARVE_VOLUME = 0.6;
+const MAX_CARVE_VOLUME = 0.3;
 const MIN_RATE = 0.8;
 const MAX_RATE = 1.4;
 
