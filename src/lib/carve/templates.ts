@@ -1,11 +1,26 @@
 import { circle, fillPolygon, glyph, mirror, polyline, text } from './shapes';
 import type { Point, Stroke } from './strokes';
 
+export type TemplateCategoryId = 'faces' | 'shapes' | 'dev';
+
+export interface TemplateCategory {
+  id: TemplateCategoryId;
+  label: string;
+  glyph: string;
+}
+
 export interface Template {
   id: string;
   label: string;
+  category: TemplateCategoryId;
   strokes: Stroke[];
 }
+
+export const TEMPLATE_CATEGORIES: readonly TemplateCategory[] = [
+  { id: 'faces', label: 'Faces', glyph: '🎃' },
+  { id: 'shapes', label: 'Shapes', glyph: '🦇' },
+  { id: 'dev', label: 'Dev', glyph: '</>' },
+];
 
 const W = 0.03;
 const SMILE_W = 0.045;
@@ -53,6 +68,7 @@ const dotEyes = (): Stroke[] =>
 const classic: Template = {
   id: 'classic',
   label: 'Classic',
+  category: 'faces',
   strokes: [
     ...fillPolygon(W, EYE_LEFT),
     ...fillPolygon(W, mirror(EYE_LEFT)),
@@ -64,6 +80,7 @@ const classic: Template = {
 const happy: Template = {
   id: 'happy',
   label: 'Happy',
+  category: 'faces',
   strokes: [
     ...dotEyes(),
     ...fillPolygon(W, NOSE),
@@ -74,6 +91,7 @@ const happy: Template = {
 const braces: Template = {
   id: 'braces',
   label: '{ }',
+  category: 'dev',
   strokes: [
     ...glyph('{', W, [0.28, 0.5], 0.12, 0.22),
     ...glyph('}', W, [0.6, 0.5], 0.12, 0.22),
@@ -84,6 +102,7 @@ const braces: Template = {
 const notFound: Template = {
   id: 'not-found',
   label: '404',
+  category: 'dev',
   strokes: [
     ...dotEyes(),
     ...text('404', BOLD_W, [0.28, 0.28], 0.12, 0.18, 0.04),
@@ -93,6 +112,7 @@ const notFound: Template = {
 const tags: Template = {
   id: 'tags',
   label: '</>',
+  category: 'dev',
   strokes: [
     ...glyph('<', W, [0.27, 0.5], 0.14, 0.22),
     ...glyph('/', W, [0.455, 0.5], 0.09, 0.22),
@@ -108,3 +128,18 @@ export const TEMPLATES: readonly Template[] = [
   notFound,
   tags,
 ];
+
+export const templatesByCategory = (
+  category: TemplateCategoryId,
+  templates: readonly Template[] = TEMPLATES,
+): Template[] => templates.filter((t) => t.category === category);
+
+// `rng` returns a number in [0, 1); injected so the pick is testable.
+export const pickRandomTemplate = (
+  excludeId: string | null,
+  rng: () => number = Math.random,
+  templates: readonly Template[] = TEMPLATES,
+): Template | null => {
+  const pool = templates.filter((t) => t.id !== excludeId);
+  return pool[Math.floor(rng() * pool.length)] ?? null;
+};
