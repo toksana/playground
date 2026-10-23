@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { makePoint, makeStroke } from '@/lib/carve/testFactories';
 import { BRUSH_SIZES, useCarveStore } from './useCarveStore';
@@ -129,5 +130,33 @@ describe('useCarveStore', () => {
     });
 
     expect(versions).toEqual([1, 1, 1]);
+  });
+
+  it('marks a loaded template as active', () => {
+    const id = faker.string.alphanumeric(8);
+
+    useCarveStore.getState().loadTemplate(id, [makeStroke()]);
+
+    const state = useCarveStore.getState();
+    expect(state.activeTemplateId).toBe(id);
+    expect(state.strokes).toHaveLength(1);
+    expect(state.isShared).toBe(false);
+  });
+
+  it('clears the active template on stroke, undo, clear and load', () => {
+    const actions = [
+      () => useCarveStore.getState().beginStroke(makePoint()),
+      () => useCarveStore.getState().undo(),
+      () => useCarveStore.getState().clear(),
+      () => useCarveStore.getState().loadStrokes([], true),
+    ];
+
+    const results = actions.map((action) => {
+      useCarveStore.getState().loadTemplate(faker.string.alphanumeric(8), []);
+      action();
+      return useCarveStore.getState().activeTemplateId;
+    });
+
+    expect(results).toEqual([null, null, null, null]);
   });
 });

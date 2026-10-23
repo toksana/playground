@@ -7,7 +7,8 @@ import { ToolButton } from './ToolButton';
 // Row above the toolbar on touch devices, column on the right with a mouse.
 export const TemplatePicker = () => {
   const visible = useCarveStore((s) => s.phase === 'carving');
-  const loadStrokes = useCarveStore((s) => s.loadStrokes);
+  const loadTemplate = useCarveStore((s) => s.loadTemplate);
+  const activeTemplateId = useCarveStore((s) => s.activeTemplateId);
 
   if (!visible) return null;
 
@@ -17,7 +18,9 @@ export const TemplatePicker = () => {
         <ToolButton
           key={template.id}
           aria-label={`Template: ${template.label}`}
-          onClick={() => loadStrokes(template.strokes)}
+          active={activeTemplateId === template.id}
+          aria-pressed={activeTemplateId === template.id}
+          onClick={() => loadTemplate(template.id, template.strokes)}
         >
           {template.label}
         </ToolButton>
