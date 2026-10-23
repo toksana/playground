@@ -8,6 +8,7 @@ import { CarveToolbar } from './ui/CarveToolbar';
 import { IntroOverlay } from './ui/IntroOverlay';
 import { MuteButton } from './ui/MuteButton';
 import { RevealPanel } from './ui/RevealPanel';
+import { TemplatePicker } from './ui/TemplatePicker';
 import { Scene } from './scene/Scene';
 
 export const Experience = () => {
@@ -27,6 +28,7 @@ export const Experience = () => {
       </Canvas>
       <Loader />
       <CarveToolbar />
+      <TemplatePicker />
       <RevealPanel />
       <MuteButton />
       <IntroOverlay />
