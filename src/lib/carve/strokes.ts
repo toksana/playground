@@ -1,9 +1,11 @@
 export type Point = [number, number];
 
 // u, v in 0..1; w is the brush width as a fraction of the mask size.
+// `fill` marks a closed polygon (template areas): the mask fills it and outlines it with `w`.
 export interface Stroke {
   w: number;
   pts: Point[];
+  fill?: boolean;
 }
 
 export const MIN_POINT_DISTANCE = 0.004;

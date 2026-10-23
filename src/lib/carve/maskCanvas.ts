@@ -35,19 +35,38 @@ const fillBackground = (ctx: CanvasRenderingContext2D, size: number): void => {
   ctx.fillRect(0, 0, size, size);
 };
 
+const tracePath = (
+  ctx: CanvasRenderingContext2D,
+  points: Point[],
+  closed: boolean,
+): void => {
+  ctx.beginPath();
+  points.forEach(([x, y], i) =>
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y),
+  );
+  if (closed) ctx.closePath();
+};
+
 const strokeLine = (
   ctx: CanvasRenderingContext2D,
   points: Point[],
   lineWidth: number,
   alpha: number,
+  closed = false,
 ): void => {
   ctx.globalAlpha = alpha;
   ctx.lineWidth = lineWidth;
-  ctx.beginPath();
-  points.forEach(([x, y], i) =>
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y),
-  );
+  tracePath(ctx, points, closed);
   ctx.stroke();
+};
+
+const fillPolygonPath = (
+  ctx: CanvasRenderingContext2D,
+  points: Point[],
+): void => {
+  ctx.globalAlpha = 1;
+  tracePath(ctx, points, true);
+  ctx.fill();
 };
 
 const fillDot = (
@@ -77,7 +96,11 @@ export const drawStroke = (
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 
-  if (points.length === 1) {
+  if (stroke.fill === true && points.length >= 3) {
+    fillPolygonPath(ctx, points);
+    strokeLine(ctx, points, width * SOFT_EDGE_SCALE, SOFT_EDGE_ALPHA, true);
+    strokeLine(ctx, points, width, 1, true);
+  } else if (points.length === 1) {
     fillDot(ctx, points[0], width * SOFT_EDGE_SCALE, SOFT_EDGE_ALPHA);
     fillDot(ctx, points[0], width, 1);
   } else if (points.length > 1) {
