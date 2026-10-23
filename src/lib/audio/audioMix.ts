@@ -17,9 +17,9 @@ export const LAYER_FADE_MS: Record<Layer, number> = {
 export const phaseMix = (phase: Phase): Record<Layer, number> => {
   switch (phase) {
     case 'lighting':
-      return { ambient: 0.3, crackle: 0.4, music: 0 };
+      return { ambient: 0.3, crackle: 0.2, music: 0 };
     case 'reveal':
-      return { ambient: 0, crackle: 0.25, music: 0.5 };
+      return { ambient: 0, crackle: 0.12, music: 0.5 };
     default:
       return { ambient: 0.3, crackle: 0, music: 0 };
   }
