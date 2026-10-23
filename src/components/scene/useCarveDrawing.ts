@@ -20,7 +20,11 @@ const toCarveUV = (e: PointerEvent): Point | null => {
 export const useCarveDrawing = () => {
   const pressed = useRef(false);
 
-  const isCarving = (): boolean => useCarveStore.getState().phase === 'carving';
+  // Input is ignored while a template is being carved by the animation.
+  const isCarving = (): boolean => {
+    const { phase, isAnimating } = useCarveStore.getState();
+    return phase === 'carving' && !isAnimating;
+  };
 
   const onPointerDown = (e: PointerEvent): void => {
     if (!isCarving()) return;
@@ -32,6 +36,10 @@ export const useCarveDrawing = () => {
 
   const onPointerMove = (e: PointerEvent): void => {
     if (!pressed.current) return;
+    if (!isCarving()) {
+      pressed.current = false;
+      return;
+    }
     e.stopPropagation();
     const { current, beginStroke, extendStroke, endStroke } =
       useCarveStore.getState();

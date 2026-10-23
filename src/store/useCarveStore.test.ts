@@ -159,4 +159,73 @@ describe('useCarveStore', () => {
 
     expect(results).toEqual([null, null, null, null]);
   });
+
+  describe('template animation', () => {
+    const template = [makeStroke(), makeStroke(), makeStroke()];
+
+    it('starts from an empty mask and blocks edits', () => {
+      useCarveStore.getState().loadStrokes([makeStroke()]);
+
+      useCarveStore.getState().startTemplateAnimation();
+
+      const state = useCarveStore.getState();
+      expect(state.isAnimating).toBe(true);
+      expect(state.strokes).toEqual([]);
+      expect(state.activeTemplateId).toBeNull();
+    });
+
+    it('ignores user strokes while animating', () => {
+      useCarveStore.getState().startTemplateAnimation();
+      const before = useCarveStore.getState();
+
+      useCarveStore.getState().beginStroke(makePoint());
+      useCarveStore.getState().extendStroke(makePoint());
+      useCarveStore.getState().endStroke();
+
+      expect(useCarveStore.getState()).toBe(before);
+    });
+
+    it('keeps the strokes reference while one stroke is in progress', () => {
+      useCarveStore.getState().startTemplateAnimation();
+      const partial = { w: template[0].w, pts: template[0].pts.slice(0, 1) };
+
+      useCarveStore.getState().advanceTemplateAnimation(template, 0, partial);
+      const strokes = useCarveStore.getState().strokes;
+      useCarveStore.getState().advanceTemplateAnimation(template, 0, partial);
+
+      expect(useCarveStore.getState().strokes).toBe(strokes);
+      expect(useCarveStore.getState().current).toBe(partial);
+    });
+
+    it('commits finished strokes as a prefix of the template', () => {
+      useCarveStore.getState().startTemplateAnimation();
+
+      useCarveStore.getState().advanceTemplateAnimation(template, 2, null);
+
+      const { strokes, current } = useCarveStore.getState();
+      expect(strokes).toEqual(template.slice(0, 2));
+      expect(current).toBeNull();
+    });
+
+    it('bumps maskVersion on every advance', () => {
+      useCarveStore.getState().startTemplateAnimation();
+      const before = useCarveStore.getState().maskVersion;
+
+      useCarveStore.getState().advanceTemplateAnimation(template, 1, null);
+
+      expect(useCarveStore.getState().maskVersion).toBe(before + 1);
+    });
+
+    it('unblocks input and activates the template on loadTemplate', () => {
+      const id = faker.string.alphanumeric(8);
+      useCarveStore.getState().startTemplateAnimation();
+
+      useCarveStore.getState().loadTemplate(id, template);
+
+      const state = useCarveStore.getState();
+      expect(state.isAnimating).toBe(false);
+      expect(state.activeTemplateId).toBe(id);
+      expect(state.strokes).toEqual(template);
+    });
+  });
 });
