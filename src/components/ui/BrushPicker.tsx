@@ -6,12 +6,13 @@ import { ToolButton } from './ToolButton';
 const BRUSH_LABELS = ['Thin brush', 'Medium brush', 'Thick brush'] as const;
 const DOT_PX = [6, 10, 16] as const;
 
+// Top-left corner on touch devices, first group of the side bar with a mouse.
 export const BrushPicker = () => {
   const brush = useCarveStore((s) => s.brush);
   const setBrush = useCarveStore((s) => s.setBrush);
 
   return (
-    <>
+    <div className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 flex flex-row gap-2 pointer-fine:static pointer-fine:flex-col">
       {BRUSH_SIZES.map((size, i) => (
         <ToolButton
           key={size}
@@ -26,6 +27,6 @@ export const BrushPicker = () => {
           />
         </ToolButton>
       ))}
-    </>
+    </div>
   );
 };

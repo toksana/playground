@@ -15,22 +15,24 @@ export const CarveToolbar = () => {
   if (!visible) return null;
 
   return (
-    <div className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 flex -translate-x-1/2 flex-row items-center gap-2 pointer-fine:top-1/2 pointer-fine:bottom-auto pointer-fine:left-4 pointer-fine:translate-x-0 pointer-fine:-translate-y-1/2 pointer-fine:flex-col">
+    <div className="contents pointer-fine:absolute pointer-fine:top-1/2 pointer-fine:left-4 pointer-fine:flex pointer-fine:-translate-y-1/2 pointer-fine:flex-col pointer-fine:items-center pointer-fine:gap-2">
       <BrushPicker />
-      <ToolButton disabled={!hasStrokes} onClick={undo}>
-        Undo
-      </ToolButton>
-      <ToolButton disabled={!hasStrokes} onClick={clear}>
-        Clear
-      </ToolButton>
-      <ToolButton
-        active={hasStrokes}
-        disabled={!hasStrokes}
-        className="enabled:animate-pulse motion-reduce:animate-none"
-        onClick={() => setPhase('lighting')}
-      >
-        Light it
-      </ToolButton>
+      <div className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 flex -translate-x-1/2 flex-row items-center gap-2 pointer-fine:static pointer-fine:translate-x-0 pointer-fine:flex-col">
+        <ToolButton disabled={!hasStrokes} onClick={undo}>
+          Undo
+        </ToolButton>
+        <ToolButton disabled={!hasStrokes} onClick={clear}>
+          Clear
+        </ToolButton>
+        <ToolButton
+          active={hasStrokes}
+          disabled={!hasStrokes}
+          className="enabled:animate-pulse motion-reduce:animate-none"
+          onClick={() => setPhase('lighting')}
+        >
+          Light it
+        </ToolButton>
+      </div>
     </div>
   );
 };
