@@ -1,30 +1,62 @@
 'use client';
 
-import { TEMPLATES } from '@/lib/carve/templates';
+import {
+  availableCategories,
+  categoryOfTemplate,
+} from '@/lib/carve/templateMenu';
+import type { Template } from '@/lib/carve/templates';
 import { useCarveStore } from '@/store/useCarveStore';
+import { TemplatePopup } from './TemplatePopup';
 import { ToolButton } from './ToolButton';
+import { useTemplateMenu } from './useTemplateMenu';
 
-// Row above the toolbar on touch devices, column on the right with a mouse.
+// Category buttons: a row above the toolbar on touch devices, a column on the right with a mouse.
 export const TemplatePicker = () => {
   const visible = useCarveStore((s) => s.phase === 'carving');
   const loadTemplate = useCarveStore((s) => s.loadTemplate);
   const activeTemplateId = useCarveStore((s) => s.activeTemplateId);
+  const menu = useTemplateMenu(visible);
 
   if (!visible) return null;
 
+  const categories = availableCategories();
+  const activeCategory = categoryOfTemplate(activeTemplateId);
+  const open = categories.find((c) => c.id === menu.openCategory);
+
+  const select = (template: Template) => {
+    loadTemplate(template.id, template.strokes);
+    menu.close();
+  };
+
   return (
-    <div className="absolute bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.5rem)] left-1/2 flex max-w-full -translate-x-1/2 flex-row gap-2 overflow-x-auto px-4 pointer-fine:top-1/2 pointer-fine:right-4 pointer-fine:bottom-auto pointer-fine:left-auto pointer-fine:translate-x-0 pointer-fine:-translate-y-1/2 pointer-fine:flex-col pointer-fine:px-0">
-      {TEMPLATES.map((template) => (
-        <ToolButton
-          key={template.id}
-          aria-label={`Template: ${template.label}`}
-          active={activeTemplateId === template.id}
-          aria-pressed={activeTemplateId === template.id}
-          onClick={() => loadTemplate(template.id, template.strokes)}
-        >
-          {template.label}
-        </ToolButton>
-      ))}
-    </div>
+    <>
+      <div className="absolute bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.5rem)] left-1/2 z-20 flex max-w-full -translate-x-1/2 flex-row gap-2 overflow-x-auto px-4 pointer-fine:top-1/2 pointer-fine:right-4 pointer-fine:bottom-auto pointer-fine:left-auto pointer-fine:translate-x-0 pointer-fine:-translate-y-1/2 pointer-fine:flex-col pointer-fine:px-0">
+        {categories.map((category) => (
+          <ToolButton
+            key={category.id}
+            aria-haspopup="dialog"
+            aria-expanded={menu.openCategory === category.id}
+            active={
+              menu.openCategory === category.id ||
+              activeCategory === category.id
+            }
+            onClick={(e) => menu.toggle(category.id, e.currentTarget)}
+          >
+            <span className="flex items-center gap-1.5">
+              <span aria-hidden="true">{category.glyph}</span>
+              {category.label}
+            </span>
+          </ToolButton>
+        ))}
+      </div>
+      {open !== undefined && (
+        <TemplatePopup
+          category={open}
+          activeTemplateId={activeTemplateId}
+          onSelect={select}
+          onClose={menu.close}
+        />
+      )}
+    </>
   );
 };
