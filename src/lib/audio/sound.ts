@@ -10,7 +10,7 @@ interface SoundDef {
 }
 
 const SOUNDS: Record<SoundName, SoundDef> = {
-  ambient: { src: '/audio/ambient.mp3', loop: true },
+  ambient: { src: '/audio/crickets-and-owl.mp3', loop: true },
   carve: { src: '/audio/carve.mp3', loop: true },
   crackle: { src: '/audio/crackle.mp3', loop: true },
   ignite: { src: '/audio/match-strike.mp3', loop: false },
