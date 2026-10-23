@@ -1,6 +1,7 @@
 'use client';
 
 import { useCarveStore } from '@/store/useCarveStore';
+import { RotateHint } from './RotateHint';
 import { ToolButton } from './ToolButton';
 
 export const RevealPanel = () => {
@@ -16,7 +17,8 @@ export const RevealPanel = () => {
   };
 
   return (
-    <div className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 flex -translate-x-1/2 flex-row items-center gap-2">
+    <div className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 flex -translate-x-1/2 flex-col items-center gap-3">
+      <RotateHint />
       <ToolButton onClick={carveAgain}>Carve again</ToolButton>
     </div>
   );
