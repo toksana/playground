@@ -4,6 +4,8 @@ import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Loader } from './Loader';
 import { CarveToolbar } from './ui/CarveToolbar';
+import { IntroOverlay } from './ui/IntroOverlay';
+import { RevealPanel } from './ui/RevealPanel';
 import { Scene } from './scene/Scene';
 
 export const Experience = () => (
@@ -20,5 +22,7 @@ export const Experience = () => (
     </Canvas>
     <Loader />
     <CarveToolbar />
+    <RevealPanel />
+    <IntroOverlay />
   </div>
 );
