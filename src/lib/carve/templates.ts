@@ -1,4 +1,5 @@
 import { circle, fillPolygon, glyph, mirror, polyline, text } from './shapes';
+import { GENERATED_STROKES } from './templates.generated';
 import type { Point, Stroke } from './strokes';
 
 export type TemplateCategoryId = 'faces' | 'shapes' | 'dev';
@@ -121,12 +122,27 @@ const tags: Template = {
   ],
 };
 
+const generatedDev = (
+  id: keyof typeof GENERATED_STROKES,
+  label: string,
+): Template => ({
+  id,
+  label,
+  category: 'dev',
+  strokes: GENERATED_STROKES[id],
+});
+
 export const TEMPLATES: readonly Template[] = [
   classic,
   happy,
   braces,
   notFound,
   tags,
+  generatedDev('nan', 'NaN'),
+  generatedDev('wq', ':wq'),
+  generatedDev('binary', '0 1 _'),
+  generatedDev('kaomoji-angry', '>_<'),
+  generatedDev('kaomoji-happy', '^_^'),
 ];
 
 export const templatesByCategory = (
