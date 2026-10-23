@@ -66,12 +66,17 @@ export const fadeTo = (name: SoundName, volume: number, ms: number): void => {
   targets.set(name, volume);
   const howl = getHowl(name);
   if (volume === 0 && !howl.playing()) return;
-  const from = howl.playing() ? Number(howl.volume()) : 0;
-  const started = ensurePlaying(name);
-  started.fade(from, volume, ms);
+  if (howl.playing()) {
+    howl.fade(Number(howl.volume()), volume, ms);
+  } else {
+    // Howler queues a fade issued right after play() (HTML5 play-lock) behind the
+    // 'play' event and never runs it, so start the fade once playback has begun.
+    howl.once('play', () => howl.fade(0, volume, ms));
+    howl.play();
+  }
   if (volume === 0)
     setTimeout(() => {
-      if (targets.get(name) === 0) started.stop();
+      if (targets.get(name) === 0) howl.stop();
     }, ms + 50);
 };
 
