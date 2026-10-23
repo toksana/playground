@@ -23,7 +23,12 @@ export const CarveToolbar = () => {
       <ToolButton disabled={!hasStrokes} onClick={clear}>
         Clear
       </ToolButton>
-      <ToolButton disabled={!hasStrokes} onClick={() => setPhase('lighting')}>
+      <ToolButton
+        active={hasStrokes}
+        disabled={!hasStrokes}
+        className="enabled:animate-pulse motion-reduce:animate-none"
+        onClick={() => setPhase('lighting')}
+      >
         Light it
       </ToolButton>
     </div>
