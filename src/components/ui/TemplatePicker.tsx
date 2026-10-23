@@ -4,6 +4,7 @@ import {
   availableCategories,
   categoryOfTemplate,
 } from '@/lib/carve/templateMenu';
+import { pickRandomTemplate } from '@/lib/carve/templates';
 import type { Template } from '@/lib/carve/templates';
 import { useCarveStore } from '@/store/useCarveStore';
 import { TemplatePopup } from './TemplatePopup';
@@ -30,6 +31,11 @@ export const TemplatePicker = () => {
     carve(template);
   };
 
+  const selectRandom = () => {
+    const template = pickRandomTemplate(activeTemplateId);
+    if (template !== null) select(template);
+  };
+
   return (
     <>
       <div className="absolute bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.5rem)] left-1/2 z-20 flex max-w-full -translate-x-1/2 flex-row gap-2 overflow-x-auto px-4 pointer-fine:top-1/2 pointer-fine:right-4 pointer-fine:bottom-auto pointer-fine:left-auto pointer-fine:translate-x-0 pointer-fine:-translate-y-1/2 pointer-fine:flex-col pointer-fine:px-0">
@@ -51,6 +57,13 @@ export const TemplatePicker = () => {
             </span>
           </ToolButton>
         ))}
+        <ToolButton
+          disabled={isAnimating}
+          aria-label="Random template"
+          onClick={selectRandom}
+        >
+          <span aria-hidden="true">🎲</span>
+        </ToolButton>
       </div>
       {open !== undefined && (
         <TemplatePopup
