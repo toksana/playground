@@ -8,14 +8,16 @@ import type { Template } from '@/lib/carve/templates';
 import { useCarveStore } from '@/store/useCarveStore';
 import { TemplatePopup } from './TemplatePopup';
 import { ToolButton } from './ToolButton';
+import { useTemplateCarve } from './useTemplateCarve';
 import { useTemplateMenu } from './useTemplateMenu';
 
 // Category buttons: a row above the toolbar on touch devices, a column on the right with a mouse.
 export const TemplatePicker = () => {
   const visible = useCarveStore((s) => s.phase === 'carving');
-  const loadTemplate = useCarveStore((s) => s.loadTemplate);
+  const isAnimating = useCarveStore((s) => s.isAnimating);
   const activeTemplateId = useCarveStore((s) => s.activeTemplateId);
   const menu = useTemplateMenu(visible);
+  const carve = useTemplateCarve();
 
   if (!visible) return null;
 
@@ -24,8 +26,8 @@ export const TemplatePicker = () => {
   const open = categories.find((c) => c.id === menu.openCategory);
 
   const select = (template: Template) => {
-    loadTemplate(template.id, template.strokes);
     menu.close();
+    carve(template);
   };
 
   return (
@@ -34,6 +36,7 @@ export const TemplatePicker = () => {
         {categories.map((category) => (
           <ToolButton
             key={category.id}
+            disabled={isAnimating}
             aria-haspopup="dialog"
             aria-expanded={menu.openCategory === category.id}
             active={
