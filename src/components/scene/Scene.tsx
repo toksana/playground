@@ -1,5 +1,6 @@
 'use client';
 
+import { Bats } from './Bats';
 import { Candle, FLAME_OFFSET } from './Candle';
 import { Effects } from './Effects';
 import { CameraRig } from './CameraRig';
@@ -30,6 +31,7 @@ export const Scene = () => {
       <Pumpkin glow={glow} />
       <Candle glow={glow} position={CANDLE_POSITION} />
       <Sparks position={SPARKS_POSITION} />
+      <Bats />
       <Effects glow={glow} />
     </>
   );
