@@ -11,7 +11,8 @@
     "./experiments": "./src/experiments.ts",
     "./consentRegion": "./src/consentRegion.ts",
     "./consentCookie": "./src/consentCookie.ts",
-    "./analytics": "./src/analytics/mixpanel.ts",
+    "./analytics": "./src/analytics/events.ts",
+    "./TrackedLink": "./src/analytics/TrackedLink.tsx",
     "./AnalyticsProvider": "./src/analytics/AnalyticsProvider.tsx",
     "./analytics.css": "./src/analytics.css"
   },

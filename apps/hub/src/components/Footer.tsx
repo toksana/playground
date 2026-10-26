@@ -11,6 +11,7 @@ export const Footer = () => (
       Made by{' '}
       <ExternalLink
         href="https://oksana.dev"
+        event={{ name: 'contact_click', props: { channel: 'portfolio' } }}
         className="text-text underline underline-offset-4"
       >
         toksana
@@ -19,6 +20,7 @@ export const Footer = () => (
     <div className="text-muted -mr-3 flex items-center gap-2 font-mono text-sm">
       <ExternalLink
         href="https://x.com/toksana_dev"
+        event={{ name: 'contact_click', props: { channel: 'x' } }}
         aria-label="X (opens in a new tab)"
         className={ICON_LINK_CLASS}
       >
@@ -26,6 +28,7 @@ export const Footer = () => (
       </ExternalLink>
       <ExternalLink
         href="https://github.com/toksana"
+        event={{ name: 'contact_click', props: { channel: 'github' } }}
         aria-label="GitHub (opens in a new tab)"
         className={ICON_LINK_CLASS}
       >

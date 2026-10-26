@@ -1,5 +1,6 @@
 'use client';
 
+import { trackEvent } from '@playground/shared/analytics';
 import { unlock } from '@/lib/audio/sound';
 import { useCarveStore } from '@/store/useCarveStore';
 
@@ -12,6 +13,7 @@ export const IntroOverlay = () => {
   // Unlock first, synchronously: iOS and Chrome only allow audio inside a user gesture.
   const enter = (): void => {
     unlock();
+    trackEvent('tap_to_enter');
     setPhase('carving');
   };
 

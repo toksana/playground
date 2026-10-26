@@ -1,7 +1,9 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { trackPhaseChanges } from '@/lib/analytics/trackPhaseChanges';
+import { useCarveStore } from '@/store/useCarveStore';
 import { useAudioDirector } from './audio/useAudioDirector';
 import { Loader } from './Loader';
 import { CarveToolbar } from './ui/CarveToolbar';
@@ -13,6 +15,7 @@ import { Scene } from './scene/Scene';
 
 export const Experience = () => {
   useAudioDirector();
+  useEffect(() => trackPhaseChanges(useCarveStore), []);
 
   return (
     <div className="fixed inset-0 overflow-hidden overscroll-none bg-black">

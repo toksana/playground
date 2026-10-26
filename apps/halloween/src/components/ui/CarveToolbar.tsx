@@ -1,5 +1,6 @@
 'use client';
 
+import { trackEvent } from '@playground/shared/analytics';
 import { useCarveStore } from '@/store/useCarveStore';
 import { BrushPicker } from './BrushPicker';
 import { ToolButton } from './ToolButton';
@@ -13,6 +14,11 @@ export const CarveToolbar = () => {
   const setPhase = useCarveStore((s) => s.setPhase);
 
   if (!visible) return null;
+
+  const lightIt = (): void => {
+    trackEvent('light_it_click');
+    setPhase('lighting');
+  };
 
   return (
     <div className="contents pointer-fine:absolute pointer-fine:top-1/2 pointer-fine:left-4 pointer-fine:flex pointer-fine:-translate-y-1/2 pointer-fine:flex-col pointer-fine:items-center pointer-fine:gap-2">
@@ -28,7 +34,7 @@ export const CarveToolbar = () => {
           active={canEdit}
           disabled={!canEdit}
           className="enabled:animate-pulse motion-reduce:animate-none"
-          onClick={() => setPhase('lighting')}
+          onClick={lightIt}
         >
           Light it
         </ToolButton>
