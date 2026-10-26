@@ -9,7 +9,8 @@
     "./tokens.css": "./src/tokens.css",
     "./overlay.css": "./src/overlay.css",
     "./experiments": "./src/experiments.ts",
-    "./consentRegion": "./src/consentRegion.ts"
+    "./consentRegion": "./src/consentRegion.ts",
+    "./consentCookie": "./src/consentCookie.ts"
   },
   "scripts": {
     "lint": "eslint",
