@@ -1,5 +1,5 @@
 {
-  "name": "glowkin",
+  "name": "@playground/halloween",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,8 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
     "test": "vitest run",
     "test:watch": "vitest",
     "build:templates": "node scripts/build-templates.mjs && prettier --write src/lib/carve/templates.generated.ts"
@@ -39,11 +37,8 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
-    "prettier": "^3.9.10",
-    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.0.5"
-  },
-  "packageManager": "pnpm@11.22.0"
+  }
 }

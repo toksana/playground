@@ -5,11 +5,12 @@ import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import type { ComponentProps } from 'react';
 import type { Material, Mesh, PointLight } from 'three';
+import { assetPath } from '@/lib/basePath';
 import { flicker } from '@/lib/carve/flicker';
 import type { GlowRef } from '@/lib/carve/glow';
 import { GLOW_COLOR } from '@/lib/carve/look';
 
-const CANDLE_URL = '/models/candle.glb';
+const CANDLE_URL = assetPath('/models/candle.glb');
 
 // Position of the `FlameAnchor` node in candle.glb, for the flame mesh and pointLight.
 export const FLAME_OFFSET: [number, number, number] = [0.006, 0.405, 0];
