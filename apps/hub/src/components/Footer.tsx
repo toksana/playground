@@ -1,37 +1,36 @@
+import { ExternalLink } from './ExternalLink';
 import { GithubIcon, XIcon } from './icons';
 
+// 44px hit area around the 20px icon.
+const ICON_LINK_CLASS =
+  'hover:text-text inline-flex size-11 items-center justify-center transition-colors';
+
 export const Footer = () => (
-  <footer className="border-line mt-16 flex flex-col gap-4 border-t py-10 md:mt-24 md:flex-row md:items-center md:justify-between">
+  <footer className="border-line mt-16 flex items-center justify-between gap-4 border-t py-10 md:mt-24">
     <p className="text-muted font-mono text-sm">
       Made by{' '}
-      <a
+      <ExternalLink
         href="https://oksana.dev"
         className="text-text underline underline-offset-4"
       >
         toksana
-      </a>
+      </ExternalLink>
     </p>
-    <div className="text-muted flex items-center gap-6 font-mono text-sm">
-      <a
+    <div className="text-muted -mr-3 flex items-center gap-2 font-mono text-sm">
+      <ExternalLink
         href="https://x.com/toksana_dev"
-        aria-label="X"
-        className="hover:text-text transition-colors"
+        aria-label="X (opens in a new tab)"
+        className={ICON_LINK_CLASS}
       >
-        <span className="hidden md:inline">
-          <XIcon />
-        </span>
-        <span className="underline underline-offset-4 md:hidden">X</span>
-      </a>
-      <a
+        <XIcon />
+      </ExternalLink>
+      <ExternalLink
         href="https://github.com/toksana"
-        aria-label="GitHub"
-        className="hover:text-text transition-colors"
+        aria-label="GitHub (opens in a new tab)"
+        className={ICON_LINK_CLASS}
       >
-        <span className="hidden md:inline">
-          <GithubIcon />
-        </span>
-        <span className="underline underline-offset-4 md:hidden">GitHub</span>
-      </a>
+        <GithubIcon />
+      </ExternalLink>
     </div>
   </footer>
 );
