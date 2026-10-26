@@ -10,7 +10,8 @@
     "./overlay.css": "./src/overlay.css",
     "./experiments": "./src/experiments.ts",
     "./consentRegion": "./src/consentRegion.ts",
-    "./consentCookie": "./src/consentCookie.ts"
+    "./consentCookie": "./src/consentCookie.ts",
+    "./analytics": "./src/analytics/mixpanel.ts"
   },
   "scripts": {
     "lint": "eslint",
@@ -20,6 +21,7 @@
     "react": "^19"
   },
   "devDependencies": {
+    "@types/mixpanel-browser": "^2.66.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -29,5 +31,8 @@
     "react-dom": "19.3.0",
     "typescript": "^5",
     "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "mixpanel-browser": "^2.84.0"
   }
 }
