@@ -8,7 +8,8 @@
     "./links": "./src/links.ts",
     "./tokens.css": "./src/tokens.css",
     "./overlay.css": "./src/overlay.css",
-    "./experiments": "./src/experiments.ts"
+    "./experiments": "./src/experiments.ts",
+    "./consentRegion": "./src/consentRegion.ts"
   },
   "scripts": {
     "lint": "eslint",
