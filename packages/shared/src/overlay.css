@@ -1,7 +1,12 @@
 .pg-overlay-link {
   position: fixed;
   z-index: 30;
-  padding: 0.25rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  /* 40px tall (WCAG 2.5.8 asks for 24px) so the box clears the brush picker below it;
+     the narrow side padding keeps the two links from overlapping on a phone. */
+  min-height: 2.5rem;
+  padding: 0 0.25rem;
   font-family: var(--pg-font-mono);
   font-size: 0.75rem;
   line-height: 1;
@@ -18,19 +23,19 @@
 }
 
 .pg-overlay-back {
-  top: max(0.5rem, env(safe-area-inset-top));
+  top: max(0px, env(safe-area-inset-top));
   left: 0.5rem;
 }
 
 .pg-overlay-credit {
   right: 0.5rem;
-  bottom: max(0.25rem, env(safe-area-inset-bottom));
+  bottom: max(0px, env(safe-area-inset-bottom));
 }
 
 /* Touch layouts keep their toolbars along the bottom edge, so the credit moves up. */
 @media (pointer: coarse) {
   .pg-overlay-credit {
-    top: max(0.5rem, env(safe-area-inset-top));
+    top: max(0px, env(safe-area-inset-top));
     right: auto;
     bottom: auto;
     left: 50%;
