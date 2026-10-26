@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import { AnalyticsProvider } from '@playground/shared/AnalyticsProvider';
 import '@playground/shared/tokens.css';
+import '@playground/shared/analytics.css';
 import './globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -39,7 +41,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang="en"
       className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        {children}
+        <AnalyticsProvider appName="playground" />
+      </body>
     </html>
   );
 }

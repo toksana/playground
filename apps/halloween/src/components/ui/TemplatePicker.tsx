@@ -1,11 +1,12 @@
 'use client';
 
+import { trackEvent } from '@playground/shared/analytics';
 import {
   availableCategories,
   categoryOfTemplate,
 } from '@/lib/carve/templateMenu';
 import { pickRandomTemplate } from '@/lib/carve/templates';
-import type { Template } from '@/lib/carve/templates';
+import type { Template, TemplateCategoryId } from '@/lib/carve/templates';
 import { useCarveStore } from '@/store/useCarveStore';
 import { TemplatePopup } from './TemplatePopup';
 import { ToolButton } from './ToolButton';
@@ -31,7 +32,16 @@ export const TemplatePicker = () => {
     carve(template);
   };
 
+  const toggleCategory = (
+    category: TemplateCategoryId,
+    trigger: HTMLElement,
+  ): void => {
+    trackEvent('template_category_click', { category });
+    menu.toggle(category, trigger);
+  };
+
   const selectRandom = () => {
+    trackEvent('random_template_click');
     const template = pickRandomTemplate(activeTemplateId);
     if (template !== null) select(template);
   };
@@ -49,7 +59,7 @@ export const TemplatePicker = () => {
               menu.openCategory === category.id ||
               activeCategory === category.id
             }
-            onClick={(e) => menu.toggle(category.id, e.currentTarget)}
+            onClick={(e) => toggleCategory(category.id, e.currentTarget)}
           >
             <span className="flex items-center gap-1.5">
               <span aria-hidden="true">{category.glyph}</span>

@@ -1,3 +1,4 @@
+import { TrackedLink } from '@playground/shared/TrackedLink';
 import type { Experiment } from '@playground/shared/experiments';
 import { ACCENT_STYLES } from './accent';
 import { EXPERIMENT_MEDIA } from './experimentMedia';
@@ -55,12 +56,13 @@ const LiveCard = ({ experiment }: { experiment: Experiment }) => (
     <div className="flex flex-1 flex-col gap-4 p-6 md:p-8">
       <h2 className="text-3xl font-bold">{experiment.title}</h2>
       <p className="text-muted text-lg">{experiment.description}</p>
-      <a
+      <TrackedLink
         href={experiment.href}
+        event={{ name: 'play_click', props: { experiment_id: experiment.id } }}
         className="bg-amber text-night mt-auto inline-flex w-full items-center justify-center gap-2 self-start rounded-full px-7 py-4 font-medium transition-opacity hover:opacity-90 md:w-auto"
       >
         Play <ArrowRight />
-      </a>
+      </TrackedLink>
     </div>
   </article>
 );

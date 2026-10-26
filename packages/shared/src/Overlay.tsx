@@ -1,17 +1,23 @@
+import { TrackedLink } from './analytics/TrackedLink';
 import { AUTHOR_HANDLE, AUTHOR_URL, HUB_URL } from './links';
 
 export const Overlay = () => (
   <>
-    <a href={HUB_URL} className="pg-overlay-link pg-overlay-back">
+    <TrackedLink
+      href={HUB_URL}
+      className="pg-overlay-link pg-overlay-back"
+      event={{ name: 'playground_click' }}
+    >
       ← playground
-    </a>
-    <a
+    </TrackedLink>
+    <TrackedLink
       href={AUTHOR_URL}
       target="_blank"
       rel="noopener noreferrer"
       className="pg-overlay-link pg-overlay-credit"
+      event={{ name: 'contact_click', props: { channel: 'x' } }}
     >
       by {AUTHOR_HANDLE}
-    </a>
+    </TrackedLink>
   </>
 );

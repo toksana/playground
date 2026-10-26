@@ -1,5 +1,6 @@
 'use client';
 
+import { trackEvent } from '@playground/shared/analytics';
 import { useCarveStore } from '@/store/useCarveStore';
 import { RotateHint } from './RotateHint';
 import { ToolButton } from './ToolButton';
@@ -12,6 +13,7 @@ export const RevealPanel = () => {
   if (!visible) return null;
 
   const carveAgain = (): void => {
+    trackEvent('carve_again_click');
     clear();
     setPhase('carving');
   };

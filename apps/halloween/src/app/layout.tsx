@@ -1,9 +1,11 @@
 import type { CSSProperties } from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
+import { AnalyticsProvider } from '@playground/shared/AnalyticsProvider';
 import { Overlay } from '@playground/shared/Overlay';
 import '@playground/shared/tokens.css';
 import '@playground/shared/overlay.css';
+import '@playground/shared/analytics.css';
 import './globals.css';
 
 const geistSans = Geist({
@@ -43,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       >
         {children}
         <Overlay />
+        <AnalyticsProvider appName="Glowkin" />
       </body>
     </html>
   );
