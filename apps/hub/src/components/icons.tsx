@@ -1,27 +1,6 @@
 import type { Accent } from '@playground/shared/experiments';
 import type { ReactNode } from 'react';
 
-export const PumpkinIcon = () => (
-  <svg viewBox="0 0 120 130" className="h-full w-full" aria-hidden="true">
-    <ellipse cx="32" cy="76" rx="26" ry="38" fill="#c2410c" />
-    <ellipse cx="88" cy="76" rx="26" ry="38" fill="#c2410c" />
-    <ellipse cx="60" cy="76" rx="26" ry="40" fill="#ea580c" />
-    <path
-      d="M60 38 C58 28 62 20 70 18"
-      fill="none"
-      stroke="#65a30d"
-      strokeWidth="5"
-      strokeLinecap="round"
-    />
-    <path d="M44 66 L58 70 L48 58 Z" fill="#fbbf24" />
-    <path d="M76 66 L62 70 L72 58 Z" fill="#fbbf24" />
-    <path
-      d="M40 88 L48 96 L54 88 L60 98 L66 88 L72 96 L80 88 C72 104 48 104 40 88 Z"
-      fill="#fbbf24"
-    />
-  </svg>
-);
-
 export const SnowflakeIcon = () => (
   <svg viewBox="0 0 120 120" className="h-full w-full" aria-hidden="true">
     <g
@@ -59,7 +38,6 @@ export const FireworkIcon = () => (
 );
 
 export const EXPERIMENT_ICONS: Record<string, () => ReactNode> = {
-  halloween: PumpkinIcon,
   christmas: SnowflakeIcon,
   'new-year': FireworkIcon,
 };

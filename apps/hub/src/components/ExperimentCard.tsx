@@ -1,5 +1,6 @@
 import type { Experiment } from '@playground/shared/experiments';
 import { ACCENT_STYLES } from './accent';
+import { EXPERIMENT_MEDIA } from './experimentMedia';
 import { ArrowRight, EXPERIMENT_ICONS } from './icons';
 
 const TagPill = ({ experiment }: { experiment: Experiment }) => {
@@ -18,19 +19,39 @@ const CardIcon = ({ experiment }: { experiment: Experiment }) => {
   return Icon === undefined ? null : <Icon />;
 };
 
-const LiveCard = ({ experiment }: { experiment: Experiment }) => (
-  <article className="border-amber/30 bg-tile flex flex-col overflow-hidden rounded-3xl border shadow-[0_0_60px_-10px_rgb(245_158_11/0.25)]">
-    <div className="relative grid h-64 place-items-center bg-[radial-gradient(circle_at_center,rgb(245_158_11/0.25),transparent_65%)] md:h-[22rem]">
+const LIVE_GLOW =
+  'bg-[radial-gradient(circle_at_center,rgb(245_158_11/0.25),transparent_65%)]';
+
+// A recorded demo is portrait, so its area is taller; the top padding clears the pills.
+const LiveArt = ({ experiment }: { experiment: Experiment }) => {
+  const Media = EXPERIMENT_MEDIA[experiment.id];
+  const layout =
+    Media === undefined
+      ? 'grid h-64 place-items-center md:h-[22rem]'
+      : 'flex h-[26rem] justify-center px-6 pt-20 pb-6 md:h-[30rem]';
+
+  return (
+    <div className={`relative ${LIVE_GLOW} ${layout}`}>
       <div className="absolute top-6 left-6">
         <TagPill experiment={experiment} />
       </div>
       <span className="bg-amber text-night absolute top-6 right-6 rounded-full px-3 py-1.5 font-mono text-xs font-bold">
         WIP
       </span>
-      <div className="h-40 w-36 md:h-52 md:w-44">
-        <CardIcon experiment={experiment} />
-      </div>
+      {Media === undefined ? (
+        <div className="h-40 w-36 md:h-52 md:w-44">
+          <CardIcon experiment={experiment} />
+        </div>
+      ) : (
+        <Media />
+      )}
     </div>
+  );
+};
+
+const LiveCard = ({ experiment }: { experiment: Experiment }) => (
+  <article className="border-amber/30 bg-tile flex flex-col overflow-hidden rounded-3xl border shadow-[0_0_60px_-10px_rgb(245_158_11/0.25)]">
+    <LiveArt experiment={experiment} />
     <div className="flex flex-1 flex-col gap-4 p-6 md:p-8">
       <h2 className="text-3xl font-bold">{experiment.title}</h2>
       <p className="text-muted text-lg">{experiment.description}</p>
