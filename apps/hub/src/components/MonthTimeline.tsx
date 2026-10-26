@@ -37,7 +37,7 @@ const MonthItem = ({ slot }: { slot: TimelineSlot }) => {
         {slot.label}
       </span>
       <MonthDot slot={slot} />
-      <span className="hidden min-h-5 font-mono text-sm md:block">
+      <span className="hidden min-h-5 font-mono text-sm break-words sm:block">
         {experiment === null
           ? ''
           : experiment.title.replace(/^\[|\]$/g, '').replace(' experiment', '')}
@@ -51,7 +51,7 @@ export const MonthTimeline = () => (
     aria-label="Season timeline"
     className="border-line border-y py-8 md:py-10"
   >
-    <ol className="grid grid-cols-6 gap-x-2 gap-y-8 md:grid-cols-12 md:gap-y-0">
+    <ol className="grid grid-cols-6 gap-x-2 gap-y-8 xl:grid-cols-12 xl:gap-y-0">
       {slots.map((slot) => (
         <MonthItem key={slot.label} slot={slot} />
       ))}
