@@ -19,8 +19,19 @@ export interface TimelineSlot {
   experiment: Experiment | null;
 }
 
-export const SEASON_LABEL =
-  'Season one: Halloween 2026 → Christmas → New Year 2027';
+export interface SeasonPart {
+  text: string;
+  accent: Accent;
+}
+
+export const SEASON_PREFIX = 'Season one:';
+
+// Season names in order; each takes the accent of its experiment.
+export const SEASON_PARTS: readonly SeasonPart[] = [
+  { text: 'Halloween', accent: 'amber' },
+  { text: 'Christmas', accent: 'frost' },
+  { text: 'New Year', accent: 'violet' },
+];
 
 export const MONTH_LABELS = [
   'Oct',

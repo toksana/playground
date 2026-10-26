@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { EXPERIMENTS, MONTH_LABELS, buildTimeline } from './experiments';
+import {
+  EXPERIMENTS,
+  MONTH_LABELS,
+  SEASON_PARTS,
+  buildTimeline,
+} from './experiments';
 import type { Experiment } from './experiments';
 
 const makeExperiment = (overrides: Partial<Experiment>): Experiment => ({
@@ -53,5 +58,20 @@ describe('EXPERIMENTS', () => {
     // Assert
     expect(uniqueIds.size).toBe(ids.length);
     expect(uniqueMonths.size).toBe(months.length);
+  });
+});
+
+describe('SEASON_PARTS', () => {
+  it('uses the accent of each experiment, in season order', () => {
+    // Arrange
+    const experimentAccents = [...EXPERIMENTS]
+      .sort((a, b) => a.monthIndex - b.monthIndex)
+      .map((experiment) => experiment.accent);
+
+    // Act
+    const partAccents = SEASON_PARTS.map((part) => part.accent);
+
+    // Assert
+    expect(partAccents).toEqual(experimentAccents);
   });
 });
