@@ -7,7 +7,8 @@
     "./Overlay": "./src/Overlay.tsx",
     "./links": "./src/links.ts",
     "./tokens.css": "./src/tokens.css",
-    "./overlay.css": "./src/overlay.css"
+    "./overlay.css": "./src/overlay.css",
+    "./experiments": "./src/experiments.ts"
   },
   "scripts": {
     "lint": "eslint",
