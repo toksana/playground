@@ -1,8 +1,12 @@
 import { ExternalLink } from './ExternalLink';
 import { GithubIcon, XIcon } from './icons';
 
+// 44px hit area around the 20px icon.
+const ICON_LINK_CLASS =
+  'hover:text-text inline-flex size-11 items-center justify-center transition-colors';
+
 export const Footer = () => (
-  <footer className="border-line mt-16 flex flex-col gap-4 border-t py-10 md:mt-24 md:flex-row md:items-center md:justify-between">
+  <footer className="border-line mt-16 flex items-center justify-between gap-4 border-t py-10 md:mt-24">
     <p className="text-muted font-mono text-sm">
       Made by{' '}
       <ExternalLink
@@ -12,26 +16,20 @@ export const Footer = () => (
         toksana
       </ExternalLink>
     </p>
-    <div className="text-muted flex items-center gap-6 font-mono text-sm">
+    <div className="text-muted -mr-3 flex items-center gap-2 font-mono text-sm">
       <ExternalLink
         href="https://x.com/toksana_dev"
         aria-label="X (opens in a new tab)"
-        className="hover:text-text transition-colors"
+        className={ICON_LINK_CLASS}
       >
-        <span className="hidden md:inline">
-          <XIcon />
-        </span>
-        <span className="underline underline-offset-4 md:hidden">X</span>
+        <XIcon />
       </ExternalLink>
       <ExternalLink
         href="https://github.com/toksana"
         aria-label="GitHub (opens in a new tab)"
-        className="hover:text-text transition-colors"
+        className={ICON_LINK_CLASS}
       >
-        <span className="hidden md:inline">
-          <GithubIcon />
-        </span>
-        <span className="underline underline-offset-4 md:hidden">GitHub</span>
+        <GithubIcon />
       </ExternalLink>
     </div>
   </footer>
