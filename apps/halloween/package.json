@@ -12,6 +12,7 @@
     "build:templates": "node scripts/build-templates.mjs && prettier --write src/lib/carve/templates.generated.ts"
   },
   "dependencies": {
+    "@playground/shared": "workspace:*",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "@react-three/postprocessing": "^3.2.1",

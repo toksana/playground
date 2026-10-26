@@ -1,5 +1,9 @@
+import type { CSSProperties } from 'react';
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
+import { Overlay } from '@playground/shared/Overlay';
+import '@playground/shared/tokens.css';
+import '@playground/shared/overlay.css';
 import './globals.css';
 
 const geistSans = Geist({
@@ -9,6 +13,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
+  subsets: ['latin'],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: '--font-jetbrains-mono',
   subsets: ['latin'],
 });
 
@@ -26,9 +35,15 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body
+        className="flex min-h-full flex-col"
+        style={{ '--accent': 'var(--pg-amber)' } as CSSProperties}
+      >
+        {children}
+        <Overlay />
+      </body>
     </html>
   );
 }

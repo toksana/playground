@@ -1,0 +1,30 @@
+{
+  "name": "@playground/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./Overlay": "./src/Overlay.tsx",
+    "./links": "./src/links.ts",
+    "./tokens.css": "./src/tokens.css",
+    "./overlay.css": "./src/overlay.css"
+  },
+  "scripts": {
+    "lint": "eslint",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "react": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "^5",
+    "vitest": "^5.0.5"
+  }
+}

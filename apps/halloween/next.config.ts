@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  transpilePackages: ['@playground/shared'],
   turbopack: {
     rules: {
       '*.css': {
