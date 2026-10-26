@@ -1,4 +1,4 @@
-// Procedural loops → mono WAV → mp3 (needs ffmpeg): night ambience, carve scrape, fire crackle.
+// Procedural loops → mono WAV → mp3 (needs ffmpeg): carve scrape, fire crackle.
 // Usage: node scripts/generate-audio.mjs [outDir]   (default: public/audio)
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -72,104 +72,6 @@ const toWav = (x) => {
 // ---------- sounds ----------
 const SECONDS = (s, fade) => s + fade;
 
-// Night ambience: dark drone, thin gusts of wind, distant crickets and two rare creaks.
-// Every periodic part completes whole cycles per loop, so the seam stays silent.
-const ambient = () => {
-  const rand = mulberry32(1);
-  const len = 24;
-  const fade = 1;
-  const n = Math.round(SECONDS(len, fade) * RATE);
-  const time = (i) => i / RATE;
-  const swell = (t, cycles) => Math.sin((2 * Math.PI * cycles * t) / len);
-  const unit = (x) => {
-    const peak = x.reduce((m, v) => Math.max(m, Math.abs(v)), 0);
-    return x.map((v) => v / peak);
-  };
-
-  // Drone: detuned low partials (a slow beat, a minor third) with soft saturation.
-  const partials = [
-    [55, 1],
-    [55.25, 0.8],
-    [82.5, 0.45],
-    [65.25, 0.3],
-  ];
-  const drone = unit(
-    Float32Array.from({ length: n }, (_, i) => {
-      const t = time(i);
-      const sum = partials.reduce(
-        (acc, [hz, amp]) => acc + amp * Math.sin(2 * Math.PI * hz * t),
-        0,
-      );
-      return Math.tanh(sum * 1.4) * (0.7 + 0.3 * swell(t, 2));
-    }),
-  );
-
-  // Wind: thin filtered noise with uneven gusts.
-  const wind = unit(
-    highpass(
-      lowpass(noise(rand, n), (t) => 700 + 500 * swell(t, 3)),
-      250,
-    ).map(
-      (v, i) =>
-        v *
-        (0.3 +
-          0.7 *
-            Math.max(
-              0,
-              0.5 + 0.35 * swell(time(i), 2) + 0.25 * swell(time(i), 5),
-            )),
-    ),
-  );
-
-  // Crickets: two voices, each a short train of 4.5 kHz pulses repeated every period.
-  const cricket = (hz, period, offset) => (t) => {
-    const local = (t + offset) % period;
-    const pulse = local % 0.045;
-    const inTrain = local < 0.045 * 4 && pulse < 0.022;
-    return inTrain
-      ? Math.sin(2 * Math.PI * hz * t) * Math.sin((Math.PI * pulse) / 0.022)
-      : 0;
-  };
-  const voices = [cricket(4300, 0.8, 0), cricket(4700, 1.2, 0.37)];
-  const crickets = unit(
-    Float32Array.from({ length: n }, (_, i) => {
-      const t = time(i);
-      const level = 0.55 + 0.45 * swell(t, 1);
-      return voices.reduce((acc, voice) => acc + voice(t), 0) * level;
-    }),
-  );
-
-  // Creaks: a sawtooth with a sliding pitch, squeezed through a mid-range band.
-  const creakAt = [7.3, 17.8];
-  const creakLen = 0.9;
-  let phase = 0;
-  const rawCreak = Float32Array.from({ length: n }, (_, i) => {
-    const t = time(i);
-    const local = creakAt
-      .map((at) => t - at)
-      .find((d) => d >= 0 && d < creakLen);
-    if (local === undefined) return 0;
-    const progress = local / creakLen;
-    phase += (30 + 25 * progress + 6 * (rand() - 0.5)) / RATE;
-    const env = Math.sin(Math.PI * progress) ** 2;
-    return ((phase % 1) * 2 - 1) * env;
-  });
-  // tanh flattens the spikes the filter leaves at each sawtooth reset, so the creak has body.
-  const creak = unit(
-    highpass(
-      lowpass(rawCreak, () => 1400),
-      350,
-    ).map((v) => Math.tanh(v * 6)),
-  );
-
-  const mix = Float32Array.from(
-    { length: n },
-    (_, i) =>
-      drone[i] * 0.7 + wind[i] * 0.4 + crickets[i] * 0.07 + creak[i] * 0.4,
-  );
-  return makeLoop(mix, len, fade);
-};
-
 // Scrape: bright band-limited noise with fast random amplitude flutter.
 const carve = () => {
   const rand = mulberry32(2);
@@ -208,7 +110,7 @@ const crackle = () => {
 fs.mkdirSync(OUT, { recursive: true });
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'glowkin-audio-'));
 
-Object.entries({ ambient, carve, crackle }).forEach(([name, make]) => {
+Object.entries({ carve, crackle }).forEach(([name, make]) => {
   const wav = path.join(tmp, `${name}.wav`);
   const mp3 = path.join(OUT, `${name}.mp3`);
   fs.writeFileSync(wav, toWav(normalize(make())));
