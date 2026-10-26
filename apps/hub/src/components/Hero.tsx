@@ -2,7 +2,7 @@ import { SEASON_LABEL } from '@playground/shared/experiments';
 
 export const Hero = () => (
   <section className="pt-12 pb-10 md:pt-24 md:pb-16">
-    <p className="text-muted font-mono text-xs tracking-[0.1em] uppercase md:text-sm md:tracking-[0.2em]">
+    <p className="text-muted font-mono text-xs tracking-[0.1em] text-balance uppercase md:text-sm md:tracking-[0.2em]">
       {SEASON_LABEL}
     </p>
     <h1 className="mt-6 text-[2.5rem] leading-[1.05] font-bold tracking-tight md:mt-8 md:text-8xl">

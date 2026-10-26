@@ -19,7 +19,8 @@ export interface TimelineSlot {
   experiment: Experiment | null;
 }
 
-export const SEASON_LABEL = 'Season one · Oct 2026 — Sep 2027';
+export const SEASON_LABEL =
+  'Season one: Halloween 2026 → Christmas → New Year 2027';
 
 export const MONTH_LABELS = [
   'Oct',
