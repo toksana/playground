@@ -1,0 +1,14 @@
+:root {
+  --pg-night: #07080c;
+  --pg-tile: #0d0f15;
+  --pg-line: #2a3040;
+  --pg-muted: #9aa3b5;
+  --pg-text: #e6e8ef;
+
+  --pg-amber: #f59e0b;
+  --pg-frost: #7dd3fc;
+  --pg-violet: #e879f9;
+
+  --pg-font-mono:
+    var(--font-jetbrains-mono), ui-monospace, 'SF Mono', Menlo, monospace;
+}

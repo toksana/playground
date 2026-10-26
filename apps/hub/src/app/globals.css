@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --color-night: var(--pg-night);
+  --color-tile: var(--pg-tile);
+  --color-line: var(--pg-line);
+  --color-muted: var(--pg-muted);
+  --color-text: var(--pg-text);
+  --color-amber: var(--pg-amber);
+  --color-frost: var(--pg-frost);
+  --color-violet: var(--pg-violet);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--pg-night);
+  color: var(--pg-text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* A sparse field of tiny stars behind everything. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgb(154 163 181 / 0.35), transparent),
+    radial-gradient(1px 1px at 78% 8%, rgb(154 163 181 / 0.3), transparent),
+    radial-gradient(1px 1px at 34% 62%, rgb(154 163 181 / 0.25), transparent),
+    radial-gradient(1px 1px at 91% 47%, rgb(154 163 181 / 0.3), transparent),
+    radial-gradient(1px 1px at 58% 86%, rgb(154 163 181 / 0.25), transparent),
+    radial-gradient(1px 1px at 6% 91%, rgb(154 163 181 / 0.3), transparent);
+}

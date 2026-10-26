@@ -13,10 +13,11 @@ import {
   GLOW_COLOR,
 } from '@/lib/carve/look';
 import { useCarveMask } from '@/lib/carve/useCarveMask';
+import { assetPath } from '@/lib/basePath';
 import { CarveMaterial } from './CarveMaterial';
 import { useCarveDrawing } from './useCarveDrawing';
 
-const PUMPKIN_URL = '/models/pumpkin.glb';
+const PUMPKIN_URL = assetPath('/models/pumpkin.glb');
 
 interface PumpkinGLTF {
   nodes: { PumpkinShell: Mesh; Stem: Mesh };

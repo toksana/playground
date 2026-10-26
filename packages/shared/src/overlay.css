@@ -1,0 +1,39 @@
+.pg-overlay-link {
+  position: fixed;
+  z-index: 30;
+  padding: 0.25rem 0.5rem;
+  font-family: var(--pg-font-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--accent, var(--pg-amber));
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity 150ms;
+}
+
+.pg-overlay-link:hover,
+.pg-overlay-link:focus-visible {
+  opacity: 1;
+}
+
+.pg-overlay-back {
+  top: max(0.5rem, env(safe-area-inset-top));
+  left: 0.5rem;
+}
+
+.pg-overlay-credit {
+  right: 0.5rem;
+  bottom: max(0.25rem, env(safe-area-inset-bottom));
+}
+
+/* Touch layouts keep their toolbars along the bottom edge, so the credit moves up. */
+@media (pointer: coarse) {
+  .pg-overlay-credit {
+    top: max(0.5rem, env(safe-area-inset-top));
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

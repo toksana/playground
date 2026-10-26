@@ -12,7 +12,7 @@ export const BrushPicker = () => {
   const setBrush = useCarveStore((s) => s.setBrush);
 
   return (
-    <div className="absolute top-[max(1rem,env(safe-area-inset-top))] left-4 flex flex-row gap-2 pointer-fine:static pointer-fine:flex-col">
+    <div className="absolute top-[calc(max(0.5rem,env(safe-area-inset-top))+2rem)] left-4 flex flex-row gap-2 pointer-fine:static pointer-fine:flex-col">
       {BRUSH_SIZES.map((size, i) => (
         <ToolButton
           key={size}
