@@ -11,7 +11,9 @@
     "./experiments": "./src/experiments.ts",
     "./consentRegion": "./src/consentRegion.ts",
     "./consentCookie": "./src/consentCookie.ts",
-    "./analytics": "./src/analytics/mixpanel.ts"
+    "./analytics": "./src/analytics/mixpanel.ts",
+    "./AnalyticsProvider": "./src/analytics/AnalyticsProvider.tsx",
+    "./analytics.css": "./src/analytics.css"
   },
   "scripts": {
     "lint": "eslint",
