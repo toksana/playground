@@ -40,7 +40,7 @@ describe('analytics client', () => {
     expect(sdk.track).not.toHaveBeenCalled();
   });
 
-  it('initialises once with automatic pageviews', async () => {
+  it('initialises once with automatic pageviews on the EU endpoint', async () => {
     // Arrange
     const { initAnalytics } = await load();
 
@@ -50,7 +50,10 @@ describe('analytics client', () => {
 
     // Assert
     expect(sdk.init).toHaveBeenCalledTimes(1);
-    expect(sdk.init).toHaveBeenCalledWith('token', { track_pageview: true });
+    expect(sdk.init).toHaveBeenCalledWith('token', {
+      api_host: 'https://api-eu.mixpanel.com',
+      track_pageview: true,
+    });
   });
 
   it('forwards events once ready', async () => {

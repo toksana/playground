@@ -12,6 +12,10 @@ type State =
   | { status: 'loading'; queue: QueuedEvent[] }
   | { status: 'ready'; client: Mixpanel };
 
+// The Mixpanel project uses EU data residency: events sent to the default US
+// endpoint are accepted (HTTP 200) but never show up in the project.
+const API_HOST = 'https://api-eu.mixpanel.com';
+
 let state: State = { status: 'idle' };
 
 // Call only after consent is granted (or not required). The SDK is loaded
@@ -26,7 +30,7 @@ export const initAnalytics = async (
     const { default: mixpanel } = await import('mixpanel-browser');
     // optOut() while the SDK was loading resets state to idle: do not start.
     if (state !== loading) return;
-    mixpanel.init(token, { track_pageview: true });
+    mixpanel.init(token, { api_host: API_HOST, track_pageview: true });
     loading.queue.forEach(({ event, props }) => mixpanel.track(event, props));
     state = { status: 'ready', client: mixpanel };
   } catch (error) {
