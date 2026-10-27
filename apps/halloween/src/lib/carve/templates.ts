@@ -1,4 +1,12 @@
-import { circle, fillPolygon, glyph, mirror, polyline, text } from './shapes';
+import {
+  arc,
+  circle,
+  fillPolygon,
+  glyph,
+  mirror,
+  polyline,
+  text,
+} from './shapes';
 import { GENERATED_STROKES } from './templates.generated';
 import type { Point, Stroke } from './strokes';
 
@@ -89,6 +97,32 @@ const happy: Template = {
   ],
 };
 
+// Wide vertical oval eye and a short raised brow over it (left side).
+const SCARED_EYE: Point[] = arc([0.36, 0.58], 0.055, 0.09, 0, 2 * Math.PI, 12);
+const SCARED_BROW: Point[] = arc(
+  [0.36, 0.64],
+  0.08,
+  0.09,
+  0.3 * Math.PI,
+  0.7 * Math.PI,
+  6,
+);
+const SCARED_MOUTH: Point[] = arc([0.5, 0.33], 0.07, 0.09, 0, 2 * Math.PI, 12);
+
+const scared: Template = {
+  id: 'scared',
+  label: 'Scared',
+  category: 'faces',
+  strokes: [
+    ...fillPolygon(W, SCARED_EYE),
+    ...fillPolygon(W, mirror(SCARED_EYE)),
+    polyline(W, SCARED_BROW),
+    polyline(W, mirror(SCARED_BROW)),
+    ...fillPolygon(W, NOSE),
+    ...fillPolygon(W, SCARED_MOUTH),
+  ],
+};
+
 const braces: Template = {
   id: 'braces',
   label: '{ }',
@@ -135,6 +169,7 @@ const generatedDev = (
 export const TEMPLATES: readonly Template[] = [
   classic,
   happy,
+  scared,
   braces,
   notFound,
   tags,
