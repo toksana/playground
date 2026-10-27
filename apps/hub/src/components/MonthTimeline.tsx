@@ -38,9 +38,7 @@ const MonthItem = ({ slot }: { slot: TimelineSlot }) => {
       </span>
       <MonthDot slot={slot} />
       <span className="hidden min-h-5 font-mono text-sm break-words sm:block">
-        {experiment === null
-          ? ''
-          : experiment.title.replace(/^\[|\]$/g, '').replace(' experiment', '')}
+        {experiment === null ? '' : experiment.tag.replace(/ \d{4}$/, '')}
       </span>
     </li>
   );
