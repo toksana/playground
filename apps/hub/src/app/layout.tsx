@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { AnalyticsProvider } from '@playground/shared/AnalyticsProvider';
+import { OG_IMAGE } from '@playground/shared/links';
 import '@playground/shared/tokens.css';
 import '@playground/shared/analytics.css';
 import './globals.css';
@@ -28,6 +29,13 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'playground',
     type: 'website',
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'playground',
+    description: DESCRIPTION,
+    images: [OG_IMAGE],
   },
 };
 
