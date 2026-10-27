@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, JetBrains_Mono } from 'next/font/google';
+import { preconnect } from 'react-dom';
+import { audioBaseUrl } from '@/lib/audio/audioUrl';
 import { AnalyticsProvider } from '@playground/shared/AnalyticsProvider';
 import { HUB_URL, OG_IMAGE } from '@playground/shared/links';
 import { Overlay } from '@playground/shared/Overlay';
@@ -53,6 +55,11 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
+  const audioBase = audioBaseUrl();
+  // Warm up the connection to the audio host so the first tap does not pay DNS + TLS.
+  if (audioBase !== undefined)
+    preconnect(new URL(audioBase).origin, { crossOrigin: 'anonymous' });
+
   return (
     <html
       lang="en"
