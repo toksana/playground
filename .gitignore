@@ -42,3 +42,9 @@ next-env.d.ts
 
 # turborepo
 .turbo
+
+# Pixabay audio: the license forbids redistributing the files on their own.
+# Served from Vercel Blob (NEXT_PUBLIC_AUDIO_BASE_URL), see apps/halloween/README.md.
+apps/halloween/public/audio/music.mp3
+apps/halloween/public/audio/crickets-and-owl.mp3
+apps/halloween/public/audio/match-strike.mp3
