@@ -79,6 +79,10 @@ pnpm build
 3. Add the rewrite for `/<name>` in [`apps/hub/next.config.ts`](apps/hub/next.config.ts) and a `<NAME>_URL` environment variable (declare it in `turbo.json` too, since Turborepo hides undeclared variables from builds).
 4. Create a Vercel project with Root Directory `apps/<name>`, and add a row to the table above.
 
+## License
+
+The code is [MIT](LICENSE). Third-party audio (Pixabay) is not part of the repository and stays under the [Pixabay Content License](https://pixabay.com/service/license-summary/), see [`apps/halloween/README.md`](apps/halloween/README.md#credits-and-licenses).
+
 ---
 
 Made by [toksana](https://oksana.dev) · [@toksana_dev](https://x.com/toksana_dev)

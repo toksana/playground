@@ -1,6 +1,7 @@
 {
   "name": "playground",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
