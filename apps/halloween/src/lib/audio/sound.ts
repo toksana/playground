@@ -1,5 +1,6 @@
 import { Howl, Howler } from 'howler';
 import { assetPath } from '@/lib/basePath';
+import { remoteAudioPath } from './audioUrl';
 
 export type SoundName = 'ambient' | 'carve' | 'crackle' | 'ignite' | 'music';
 
@@ -11,11 +12,11 @@ interface SoundDef {
 }
 
 const SOUNDS: Record<SoundName, SoundDef> = {
-  ambient: { src: assetPath('/audio/crickets-and-owl.mp3'), loop: true },
+  ambient: { src: remoteAudioPath('crickets-and-owl.mp3'), loop: true },
   carve: { src: assetPath('/audio/carve.mp3'), loop: true },
   crackle: { src: assetPath('/audio/crackle.mp3'), loop: true },
-  ignite: { src: assetPath('/audio/match-strike.mp3'), loop: false },
-  music: { src: assetPath('/audio/music.mp3'), loop: true, html5: true },
+  ignite: { src: remoteAudioPath('match-strike.mp3'), loop: false },
+  music: { src: remoteAudioPath('music.mp3'), loop: true, html5: true },
 };
 
 const howls = new Map<SoundName, Howl>();
