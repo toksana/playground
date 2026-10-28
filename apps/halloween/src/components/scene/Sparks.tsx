@@ -21,6 +21,7 @@ import {
 import type { Phase } from '@/store/useCarveStore';
 import { useCarveStore } from '@/store/useCarveStore';
 import { sparksFragmentShader, sparksVertexShader } from './sparksShader';
+import { useGlowColor } from './useGlowColor';
 
 const FLAME_COLOR = '#ffd27a';
 // Until the first burst, `uStart` is far in the future so every spark is "not born yet".
@@ -59,6 +60,7 @@ export const Sparks = (props: ComponentProps<'points'>) => {
   const lastPhase = useRef<Phase | null>(null);
   const geometry = useMemo(() => buildGeometry(), []);
   const uniforms = useMemo(() => buildUniforms(), []);
+  const glowColor = useGlowColor();
 
   useFrame(({ clock, camera, size, gl }) => {
     if (material.current === null) return;
@@ -72,6 +74,7 @@ export const Sparks = (props: ComponentProps<'points'>) => {
 
     const { fov } = camera as PerspectiveCamera;
     const halfTan = Math.tan((fov * Math.PI) / 360);
+    current.uColorCool.value.copy(glowColor);
     current.uTime.value = clock.elapsedTime;
     current.uScale.value = (size.height * gl.getPixelRatio()) / (2 * halfTan);
   });

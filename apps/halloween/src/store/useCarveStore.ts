@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { appendPoint, simplifyPoints } from '@/lib/carve/strokes';
 import type { Point, Stroke } from '@/lib/carve/strokes';
+import { pickFortune } from '@/lib/fortune/hashStrokes';
+import type { FortuneResult } from '@/lib/fortune/seed';
 
 export type Phase = 'intro' | 'carving' | 'lighting' | 'reveal';
 
@@ -18,6 +20,8 @@ interface CarveState {
   activeTemplateId: string | null;
   // A template is being carved by the animation: user input and edits are ignored.
   isAnimating: boolean;
+  // Fortune and candle picked from the drawing; set on `lighting`, null while carving.
+  fortune: FortuneResult | null;
   setPhase: (phase: Phase) => void;
   setBrush: (brush: number) => void;
   beginStroke: (uv: Point) => void;
@@ -44,7 +48,14 @@ export const useCarveStore = create<CarveState>()((set) => ({
   isShared: false,
   activeTemplateId: null,
   isAnimating: false,
-  setPhase: (phase) => set({ phase }),
+  fortune: null,
+  // The fortune is fixed when the candle is lit and dropped when carving starts over.
+  setPhase: (phase) =>
+    set((s) => {
+      if (phase === 'lighting')
+        return { phase, fortune: pickFortune(s.strokes) };
+      return phase === 'carving' ? { phase, fortune: null } : { phase };
+    }),
   setBrush: (brush) => set({ brush }),
   beginStroke: (uv) =>
     set((s) =>
