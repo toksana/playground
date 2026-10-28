@@ -24,7 +24,7 @@ import { batShape } from '@/lib/bats/batShape';
 import { useCarveStore } from '@/store/useCarveStore';
 import { batsVertexShader } from './batsShader';
 
-const BAT_COLOR = '#07070d';
+const BAT_COLOR = '#2b2438';
 const FLAP_SPEED = 26;
 const FLAP_AMOUNT = 0.9;
 const BAT_SIZES = [0.8, 0.65, 0.55];
