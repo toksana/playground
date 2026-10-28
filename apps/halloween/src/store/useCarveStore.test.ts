@@ -244,6 +244,25 @@ describe('useCarveStore', () => {
       expect(useCarveStore.getState().fortune).toEqual(pickFortune(strokes));
     });
 
+    it('changes only the candle on setCandle', () => {
+      useCarveStore.getState().loadStrokes([makeStroke()]);
+      useCarveStore.getState().setPhase('lighting');
+      const { fortuneIndex } = useCarveStore.getState().fortune!;
+
+      useCarveStore.getState().setCandle(4);
+
+      expect(useCarveStore.getState().fortune).toEqual({
+        fortuneIndex,
+        candleIndex: 4,
+      });
+    });
+
+    it('ignores setCandle before the candle is lit', () => {
+      useCarveStore.getState().setCandle(2);
+
+      expect(useCarveStore.getState().fortune).toBeNull();
+    });
+
     it('is kept in reveal and dropped when carving starts again', () => {
       useCarveStore.getState().loadStrokes([makeStroke()]);
       useCarveStore.getState().setPhase('lighting');

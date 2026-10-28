@@ -12,6 +12,7 @@ export type EventMap = {
   random_template_click: undefined;
   light_it_click: undefined;
   carve_again_click: undefined;
+  candle_pick: { candle: string };
   playground_click: undefined;
   contact_click: { channel: ContactChannel };
   nav_click: { target: string };
