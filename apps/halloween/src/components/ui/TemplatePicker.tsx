@@ -48,7 +48,7 @@ export const TemplatePicker = () => {
 
   return (
     <>
-      <div className="absolute bottom-[calc(max(1rem,env(safe-area-inset-bottom))+3.5rem)] left-1/2 z-20 flex max-w-full -translate-x-1/2 flex-row gap-2 overflow-x-auto px-4 pointer-fine:top-1/2 pointer-fine:right-4 pointer-fine:bottom-auto pointer-fine:left-auto pointer-fine:translate-x-0 pointer-fine:-translate-y-1/2 pointer-fine:flex-col pointer-fine:px-0">
+      <div className="absolute bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.5rem)] left-1/2 z-20 flex max-w-full -translate-x-1/2 flex-row gap-2 overflow-x-auto px-4 pointer-fine:top-1/2 pointer-fine:right-4 pointer-fine:bottom-auto pointer-fine:left-auto pointer-fine:translate-x-0 pointer-fine:-translate-y-1/2 pointer-fine:flex-col pointer-fine:px-0">
         {categories.map((category) => (
           <ToolButton
             key={category.id}
