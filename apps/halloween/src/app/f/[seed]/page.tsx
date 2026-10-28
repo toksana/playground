@@ -6,25 +6,27 @@ import { BASE_PATH } from '@/lib/basePath';
 import { CANDLES } from '@/lib/fortune/candles';
 import { FORTUNE_IMAGE_SIZE } from '@/lib/fortune/fortuneImageResponse';
 import { FORTUNES } from '@/lib/fortune/fortunes';
-import { allSeeds, decodeSeed } from '@/lib/fortune/seed';
+import { allSeeds } from '@/lib/fortune/seed';
+import { parseShareParam } from '@/lib/share/shareLink';
 
-// Shared links arrive from outside the app and every valid seed is prerendered, so this page
-// is never a navigation target worth validating as instant.
+// Shared links arrive from outside the app, so this page is never a navigation target worth
+// validating as instant. Old "<fortune>-<candle>" links are prerendered, drawing codes render on demand.
 export const instant = false;
 
 const IMAGE_ALT = 'A glowing carved pumpkin and the fortune it told';
 
 export const generateStaticParams = () => allSeeds().map((seed) => ({ seed }));
 
-// An unknown seed renders the not-found UI (with noindex); only hand-made URLs get there.
+// An unknown link renders the not-found UI (with noindex); only hand-made URLs get there.
 const resolveSeed = async (params: PageProps<'/f/[seed]'>['params']) => {
   const { seed } = await params;
-  const result = decodeSeed(seed);
-  if (result === null) notFound();
+  const data = parseShareParam(seed);
+  if (data === null) notFound();
   return {
     seed,
-    text: FORTUNES[result.fortuneIndex],
-    candle: CANDLES[result.candleIndex],
+    text: FORTUNES[data.fortuneIndex],
+    candle: CANDLES[data.candleIndex],
+    strokes: data.strokes ?? undefined,
   };
 };
 
@@ -51,12 +53,12 @@ export async function generateMetadata({
 }
 
 export default async function FortunePage({ params }: PageProps<'/f/[seed]'>) {
-  const { text, candle } = await resolveSeed(params);
+  const { text, candle, strokes } = await resolveSeed(params);
 
   return (
     <main className="grid min-h-dvh place-items-center bg-[#05060c] px-6 py-10">
       <div className="flex max-w-xl flex-col items-center gap-6 text-center">
-        <PumpkinGlyph color={candle.color} width={260} />
+        <PumpkinGlyph color={candle.color} width={260} strokes={strokes} />
         <p
           className="text-xs tracking-[0.25em] uppercase"
           style={{ color: candle.color }}
