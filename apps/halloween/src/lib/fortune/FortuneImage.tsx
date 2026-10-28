@@ -1,8 +1,11 @@
 import { PumpkinGlyph } from '@/components/PumpkinGlyph';
+import type { Stroke } from '@/lib/carve/strokes';
 
 interface FortuneImageProps {
   text: string;
   color: string;
+  // The carved face; old links have none and get a generic one.
+  strokes?: Stroke[];
 }
 
 const hexToRgba = (hex: string, alpha: number): string => {
@@ -15,7 +18,7 @@ const hexToRgba = (hex: string, alpha: number): string => {
 const fontSizeFor = (text: string): number => (text.length <= 48 ? 60 : 52);
 
 // 1200x630 social card. Only flexbox and inline styles: this is rendered by `next/og` (Satori).
-export const FortuneImage = ({ text, color }: FortuneImageProps) => (
+export const FortuneImage = ({ text, color, strokes }: FortuneImageProps) => (
   <div
     style={{
       display: 'flex',
@@ -29,7 +32,7 @@ export const FortuneImage = ({ text, color }: FortuneImageProps) => (
     }}
   >
     <div style={{ display: 'flex', width: 440 }}>
-      <PumpkinGlyph color={color} width={440} />
+      <PumpkinGlyph color={color} width={440} strokes={strokes} />
     </div>
     <div
       style={{
