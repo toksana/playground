@@ -7,6 +7,7 @@ import { useCarveStore } from '@/store/useCarveStore';
 import { useAudioDirector } from './audio/useAudioDirector';
 import { Loader } from './Loader';
 import { CarveToolbar } from './ui/CarveToolbar';
+import { FortuneCard } from './ui/FortuneCard';
 import { IntroOverlay } from './ui/IntroOverlay';
 import { MuteButton } from './ui/MuteButton';
 import { RevealPanel } from './ui/RevealPanel';
@@ -32,6 +33,7 @@ export const Experience = () => {
       <Loader />
       <CarveToolbar />
       <TemplatePicker />
+      <FortuneCard />
       <RevealPanel />
       <MuteButton />
       <IntroOverlay />

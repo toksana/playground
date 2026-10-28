@@ -4,6 +4,7 @@ import { trackEvent } from '@playground/shared/analytics';
 import { useCarveStore } from '@/store/useCarveStore';
 import { CandlePicker } from './CandlePicker';
 import { RotateHint } from './RotateHint';
+import { ShareOnXButton } from './ShareOnXButton';
 import { ToolButton } from './ToolButton';
 
 export const RevealPanel = () => {
@@ -23,7 +24,10 @@ export const RevealPanel = () => {
     <div className="absolute bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 flex -translate-x-1/2 flex-col items-center gap-3">
       <CandlePicker />
       <RotateHint />
-      <ToolButton onClick={carveAgain}>Carve again</ToolButton>
+      <div className="flex flex-row gap-2">
+        <ShareOnXButton />
+        <ToolButton onClick={carveAgain}>Carve again</ToolButton>
+      </div>
     </div>
   );
 };
