@@ -7,15 +7,12 @@ import type { ComponentProps } from 'react';
 import { BackSide } from 'three';
 import type { Material, Mesh, MeshStandardMaterial } from 'three';
 import type { GlowRef } from '@/lib/carve/glow';
-import {
-  INNER_SHELL_COLOR,
-  INNER_SHELL_SCALE,
-  GLOW_COLOR,
-} from '@/lib/carve/look';
+import { INNER_SHELL_COLOR, INNER_SHELL_SCALE } from '@/lib/carve/look';
 import { useCarveMask } from '@/lib/carve/useCarveMask';
 import { assetPath } from '@/lib/basePath';
 import { CarveMaterial } from './CarveMaterial';
 import { useCarveDrawing } from './useCarveDrawing';
+import { useGlowColor } from './useGlowColor';
 
 const PUMPKIN_URL = assetPath('/models/pumpkin.glb');
 
@@ -33,6 +30,7 @@ export const Pumpkin = ({ glow, ...props }: PumpkinProps) => {
   const mask = useCarveMask();
   const drawing = useCarveDrawing();
   const inner = useRef<MeshStandardMaterial>(null);
+  const glowColor = useGlowColor();
 
   useFrame(() => {
     if (inner.current !== null)
@@ -49,7 +47,7 @@ export const Pumpkin = ({ glow, ...props }: PumpkinProps) => {
           ref={inner}
           side={BackSide}
           color={INNER_SHELL_COLOR}
-          emissive={GLOW_COLOR}
+          emissive={glowColor}
         />
       </mesh>
       <mesh geometry={nodes.Stem.geometry} material={materials.Stem} />

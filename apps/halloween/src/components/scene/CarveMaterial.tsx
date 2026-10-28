@@ -10,6 +10,7 @@ import { CARVE_EXTENT, FRONT_THRESHOLD } from '@/lib/carve/projection';
 import type { GlowRef } from '@/lib/carve/glow';
 import { GLOW_COLOR } from '@/lib/carve/look';
 import { carveFragmentShader, carveVertexShader } from './carveShader';
+import { useGlowColor } from './useGlowColor';
 
 interface CarveMaterialProps {
   mask: CanvasTexture;
@@ -18,6 +19,7 @@ interface CarveMaterialProps {
 
 export const CarveMaterial = ({ mask, glow }: CarveMaterialProps) => {
   const material = useRef<CSM<typeof MeshStandardMaterial>>(null);
+  const glowColor = useGlowColor();
 
   const uniforms = useMemo(
     () => ({
@@ -35,6 +37,7 @@ export const CarveMaterial = ({ mask, glow }: CarveMaterialProps) => {
   useFrame(() => {
     if (material.current === null) return;
     material.current.uniforms.uGlow.value = glow.current;
+    material.current.uniforms.uGlowColor.value.copy(glowColor);
   });
 
   return (

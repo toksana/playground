@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { makePoint, makeStroke } from '@/lib/carve/testFactories';
+import { pickFortune } from '@/lib/fortune/hashStrokes';
 import { BRUSH_SIZES, useCarveStore } from './useCarveStore';
 
 const initialState = useCarveStore.getInitialState();
@@ -226,6 +227,52 @@ describe('useCarveStore', () => {
       expect(state.isAnimating).toBe(false);
       expect(state.activeTemplateId).toBe(id);
       expect(state.strokes).toEqual(template);
+    });
+  });
+
+  describe('fortune', () => {
+    it('is null before the candle is lit', () => {
+      expect(useCarveStore.getState().fortune).toBeNull();
+    });
+
+    it('is picked from the drawing when lighting starts', () => {
+      const strokes = [makeStroke(), makeStroke()];
+      useCarveStore.getState().loadStrokes(strokes);
+
+      useCarveStore.getState().setPhase('lighting');
+
+      expect(useCarveStore.getState().fortune).toEqual(pickFortune(strokes));
+    });
+
+    it('changes only the candle on setCandle', () => {
+      useCarveStore.getState().loadStrokes([makeStroke()]);
+      useCarveStore.getState().setPhase('lighting');
+      const { fortuneIndex } = useCarveStore.getState().fortune!;
+
+      useCarveStore.getState().setCandle(4);
+
+      expect(useCarveStore.getState().fortune).toEqual({
+        fortuneIndex,
+        candleIndex: 4,
+      });
+    });
+
+    it('ignores setCandle before the candle is lit', () => {
+      useCarveStore.getState().setCandle(2);
+
+      expect(useCarveStore.getState().fortune).toBeNull();
+    });
+
+    it('is kept in reveal and dropped when carving starts again', () => {
+      useCarveStore.getState().loadStrokes([makeStroke()]);
+      useCarveStore.getState().setPhase('lighting');
+      const picked = useCarveStore.getState().fortune;
+
+      useCarveStore.getState().setPhase('reveal');
+      expect(useCarveStore.getState().fortune).toEqual(picked);
+
+      useCarveStore.getState().setPhase('carving');
+      expect(useCarveStore.getState().fortune).toBeNull();
     });
   });
 });

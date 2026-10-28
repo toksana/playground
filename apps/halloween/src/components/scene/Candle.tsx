@@ -8,7 +8,7 @@ import type { Material, Mesh, PointLight } from 'three';
 import { assetPath } from '@/lib/basePath';
 import { flicker } from '@/lib/carve/flicker';
 import type { GlowRef } from '@/lib/carve/glow';
-import { GLOW_COLOR } from '@/lib/carve/look';
+import { useGlowColor } from './useGlowColor';
 
 const CANDLE_URL = assetPath('/models/candle.glb');
 
@@ -32,6 +32,7 @@ export const Candle = ({ glow, ...props }: CandleProps) => {
   const { nodes, materials } = useGLTF(CANDLE_URL) as unknown as CandleGLTF;
   const flame = useRef<Mesh>(null);
   const light = useRef<PointLight>(null);
+  const glowColor = useGlowColor();
 
   useFrame(({ clock }) => {
     const level = glow.current * flicker(clock.elapsedTime);
@@ -51,7 +52,7 @@ export const Candle = ({ glow, ...props }: CandleProps) => {
       <pointLight
         ref={light}
         position={FLAME_OFFSET}
-        color={GLOW_COLOR}
+        color={glowColor}
         intensity={0}
         distance={LIGHT_DISTANCE}
       />

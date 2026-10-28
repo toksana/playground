@@ -10,6 +10,17 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --animate-glow-pulse: glow-pulse 2s ease-out infinite;
+
+  /* Ring that expands and fades; unlike animate-pulse it never dims the button itself. */
+  @keyframes glow-pulse {
+    from {
+      box-shadow: 0 0 0 0 rgb(251 146 60 / 0.55);
+    }
+    to {
+      box-shadow: 0 0 0 14px rgb(251 146 60 / 0);
+    }
+  }
 }
 
 html,
