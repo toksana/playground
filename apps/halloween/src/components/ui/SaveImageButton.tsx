@@ -53,7 +53,8 @@ export const SaveImageButton = () => {
         color: CANDLES[fortune.candleIndex].color,
       });
       const blob = await toPngBlob(card);
-      const text = `${buildShareText(fortune)}\n${buildShareUrl(fortune)}`;
+      const { strokes } = useCarveStore.getState();
+      const text = `${buildShareText(fortune)}\n${buildShareUrl(fortune, strokes)}`;
       const mode = await saveOrShareCard(blob, text);
       trackEvent('save_image_click', { mode });
       setStatus(mode === 'share' ? 'shared' : 'saved');
