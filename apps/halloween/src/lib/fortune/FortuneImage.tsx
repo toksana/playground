@@ -23,7 +23,7 @@ export const FortuneImage = ({ text, color }: FortuneImageProps) => (
       width: '100%',
       height: '100%',
       padding: '0 72px',
-      background: `radial-gradient(circle at 27% 52%, ${hexToRgba(color, 0.26)} 0%, rgba(5, 6, 12, 1) 40%)`,
+      background: `radial-gradient(circle at 27% 52%, ${hexToRgba(color, 0.28)} 0%, ${hexToRgba(color, 0)} 55%)`,
       backgroundColor: '#05060c',
       color: '#fff7ed',
     }}
