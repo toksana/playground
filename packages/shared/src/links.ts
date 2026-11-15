@@ -5,5 +5,5 @@ export const OG_IMAGE = {
   height: 630,
   alt: 'A carved pumpkin glowing from within on a dark background',
 };
-export const AUTHOR_HANDLE = '@toksana_dev';
-export const AUTHOR_URL = 'https://x.com/toksana_dev';
+export const AUTHOR_HANDLE = '@toksanadev';
+export const AUTHOR_URL = 'https://x.com/toksanadev';

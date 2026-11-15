@@ -19,7 +19,7 @@ export const Footer = () => (
     </p>
     <div className="text-muted -mr-3 flex items-center gap-2 font-mono text-sm">
       <ExternalLink
-        href="https://x.com/toksana_dev"
+        href="https://x.com/toksanadev"
         event={{ name: 'contact_click', props: { channel: 'x' } }}
         aria-label="X (opens in a new tab)"
         className={ICON_LINK_CLASS}

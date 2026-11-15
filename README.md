@@ -85,4 +85,4 @@ The code is [MIT](LICENSE). Third-party audio (Pixabay) is not part of the repos
 
 ---
 
-Made by [toksana](https://oksana.dev) · [@toksana_dev](https://x.com/toksana_dev)
+Made by [toksana](https://oksana.dev) · [@toksanadev](https://x.com/toksanadev)
